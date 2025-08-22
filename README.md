@@ -1,0 +1,2 @@
+# WBTechTestTask
+Демонстрационный сервис с Kafka, PostgreSQL, кешем
