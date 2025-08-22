@@ -3,5 +3,6 @@ package service
 import "WBTechTestTask/internal/models"
 
 type OrderServiceInterface interface {
-	ProcessOrder(order models.Order) error
+	GetOrder(id string) (models.Order, error)
+	Create(order models.Order) (string, error)
 }
