@@ -3,6 +3,6 @@ package repository
 import "WBTechTestTask/internal/models"
 
 type OrderRepositoryInterface interface {
-	GetOrder(order *models.Order) error
-	CreateOrder(order *models.Order) error
+	GetOrder(id string) (*models.Order, error)
+	CreateOrder(order *models.Order) (string, error)
 }
