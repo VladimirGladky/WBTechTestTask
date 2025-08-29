@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Поиск заказа</h1>
+
+    <div class="search-form">
+        <input type="text" id="orderId" placeholder="Введите ID заказа" />
+        <button onclick="searchOrder()">Найти</button>
+    </div>
+
+    <div id="loading" class="hidden">
+        <div class="loader"></div>
+        <p>Загрузка...</p>
+    </div>
+
+    <div id="error" class="error hidden"></div>
+
+    <div id="result" class="result hidden">
+        <h2>Информация о заказе</h2>
+        <div class="order-info">
+            <div class="section">
+                <h3>Основная информация</h3>
+                <p><strong>Order UID:</strong> <span id="order-uid"></span></p>
+                <p><strong>Трек номер:</strong> <span id="track-number"></span></p>
+                <p><strong>Entry:</strong> <span id="entry"></span></p>
+                <p><strong>Locale:</strong> <span id="locale"></span></p>
+                <p><strong>Customer ID:</strong> <span id="customer-id"></span></p>
+                <p><strong>Delivery Service:</strong> <span id="delivery-service"></span></p>
+                <p><strong>Date Created:</strong> <span id="date-created"></span></p>
+            </div>
+
+            <div class="section">
+                <h3>Доставка</h3>
+                <p><strong>Имя:</strong> <span id="delivery-name"></span></p>
+                <p><strong>Телефон:</strong> <span id="delivery-phone"></span></p>
+                <p><strong>Почта:</strong> <span id="delivery-email"></span></p>
+                <p><strong>Адрес:</strong> <span id="delivery-address"></span></p>
+                <p><strong>Город:</strong> <span id="delivery-city"></span></p>
+                <p><strong>Регион:</strong> <span id="delivery-region"></span></p>
+                <p><strong>Индекс:</strong> <span id="delivery-zip"></span></p>
+            </div>
+
+            <div class="section">
+                <h3>Оплата</h3>
+                <p><strong>Транзакция:</strong> <span id="payment-transaction"></span></p>
+                <p><strong>Валюта:</strong> <span id="payment-currency"></span></p>
+                <p><strong>Сумма:</strong> <span id="payment-amount"></span></p>
+                <p><strong>Провайдер:</strong> <span id="payment-provider"></span></p>
+                <p><strong>Банк:</strong> <span id="payment-bank"></span></p>
+                <p><strong>Стоимость доставки:</strong> <span id="payment-delivery-cost"></span></p>
+                <p><strong>Дата оплаты:</strong> <span id="payment-dt"></span></p>
+            </div>
+
+            <div class="section full-width">
+                <h3>Товары</h3>
+                <div id="items-list"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="scrypt.js"></script>
+</body>
+</html>
