@@ -1,0 +1,11 @@
+port: 4141
+host: localhost
+
+Postgres:
+  PG_POOL_MAX: 1
+  PG_URL: postgres://root:1234@localhost:5434/postgres
+
+Kafka:
+  KAFKA_BROKERS: ["localhost:9092"]
+  KAFKA_TOPIC: orders
+  KAFKA_GROUP_ID: orders
