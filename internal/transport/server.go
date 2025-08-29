@@ -41,7 +41,7 @@ func (s *OderServer) Start() error {
 	{
 		api.POST("/create", s.createOrder())
 		api.GET("/order/:orderId", s.getOrder())
-		api.GET("/stresstest", s.stressTest())
+		api.GET("/stresstest/:orderId", s.stressTest())
 	}
 	return router.Run(s.cfg.Host + ":" + s.cfg.Port)
 }
@@ -111,7 +111,7 @@ func (s *OderServer) getOrder() gin.HandlerFunc {
 
 func (s *OderServer) stressTest() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		orderID := "test_order2"
+		orderID := c.Param("orderId")
 		iterations := 100000
 
 		start := time.Now()
