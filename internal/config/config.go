@@ -14,7 +14,6 @@ type (
 	Kafka struct {
 		KafkaBrokers []string `yaml:"kafka_brokers" env-default:"localhost:9092"`
 		KafkaTopic   string   `yaml:"kafka_topic" env-default:"orders"`
-		KafkaGroupID string   `yaml:"kafka_group_id" env-default:"orders"`
 	}
 )
 

@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -67,7 +68,7 @@ func (o OrderRepository) GetOrder(id string) (*models.Order, error) {
 		&order.InternalSignature,
 		&order.CustomerId,
 		&order.DeliveryService,
-		&order.Shardkey,
+		&order.ShardKey,
 		&order.SmId,
 		&order.DateCreated,
 		&order.OofShard,
@@ -114,7 +115,8 @@ func (o OrderRepository) CreateOrder(order *models.Order) (string, error) {
 	_, err = o.db.Exec(o.ctx,
 		"INSERT INTO orders (order_uid, track_number, entry, locale, internal_signature, "+
 			"customer_id, delivery_service, shardkey, sm_id, date_created, oof_shard, "+
-			"delivery, payment, items) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)",
+			"delivery, payment, items) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)"+
+			"ON CONFLICT (order_uid) DO NOTHING;",
 		order.OrderUid,
 		order.TrackNumber,
 		order.Entry,
@@ -122,7 +124,7 @@ func (o OrderRepository) CreateOrder(order *models.Order) (string, error) {
 		order.InternalSignature,
 		order.CustomerId,
 		order.DeliveryService,
-		order.Shardkey,
+		order.ShardKey,
 		order.SmId,
 		order.DateCreated,
 		order.OofShard,

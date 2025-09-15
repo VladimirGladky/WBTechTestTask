@@ -5,16 +5,20 @@ import (
 	"WBTechTestTask/internal/models"
 	"WBTechTestTask/internal/service"
 	"context"
+	"net/http"
+	"sync"
+	"time"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"net/http"
-	"time"
 )
 
 type OderServer struct {
-	cfg     *config.Config
-	ctx     context.Context
-	service service.OrderServiceInterface
+	cfg      *config.Config
+	ctx      context.Context
+	service  service.OrderServiceInterface
+	server   *http.Server
+	stopOnce sync.Once
 }
 
 func New(cfg *config.Config, ctx context.Context, service service.OrderServiceInterface) *OderServer {
@@ -43,7 +47,23 @@ func (s *OderServer) Start() error {
 		api.GET("/order/:orderId", s.getOrder())
 		api.GET("/stresstest/:orderId", s.stressTest())
 	}
-	return router.Run(s.cfg.Host + ":" + s.cfg.Port)
+
+	s.server = &http.Server{
+		Addr:    s.cfg.Host + ":" + s.cfg.Port,
+		Handler: router,
+	}
+
+	return s.server.ListenAndServe()
+}
+
+func (s *OderServer) Stop() error {
+	var err error
+	s.stopOnce.Do(func() {
+		ctx, cancel := context.WithTimeout(s.ctx, 30*time.Second)
+		defer cancel()
+		err = s.server.Shutdown(ctx)
+	})
+	return err
 }
 
 func (s *OderServer) createOrder() gin.HandlerFunc {
@@ -101,7 +121,7 @@ func (s *OderServer) getOrder() gin.HandlerFunc {
 			InternalSignature: order.InternalSignature,
 			CustomerId:        order.CustomerId,
 			DeliveryService:   order.DeliveryService,
-			Shardkey:          order.Shardkey,
+			ShardKey:          order.ShardKey,
 			SmId:              order.SmId,
 			DateCreated:       order.DateCreated,
 			OofShard:          order.OofShard,
@@ -141,3 +161,7 @@ func (s *OderServer) stressTest() gin.HandlerFunc {
 		})
 	}
 }
+
+//func (s *OderServer) Stop() error {
+//
+//}
