@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -49,7 +48,7 @@ func (o OrderRepository) GetAllOrders() ([]*models.Order, error) {
 		}
 		orders = append(orders, order)
 	}
-	return nil, nil
+	return orders, nil
 }
 
 func (o OrderRepository) GetOrder(id string) (*models.Order, error) {

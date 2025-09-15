@@ -15,6 +15,11 @@ type (
 		KafkaBrokers []string `yaml:"kafka_brokers" env-default:"localhost:9092"`
 		KafkaTopic   string   `yaml:"kafka_topic" env-default:"orders"`
 	}
+
+	Cache struct {
+		TTL           string `yaml:"cache_ttl" env-default:"60m"`
+		CheckInterval string `yaml:"cache_check_interval" env-default:"30s"`
+	}
 )
 
 type Config struct {
@@ -22,6 +27,7 @@ type Config struct {
 	Port     string `yaml:"port" env-default:"4141"`
 	Host     string `yaml:"host" env-default:"localhost"`
 	Kafka    Kafka  `yaml:"Kafka"`
+	Cache    Cache  `yaml:"Cache"`
 }
 
 func NewConfig() (*Config, error) {

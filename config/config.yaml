@@ -8,3 +8,7 @@ Postgres:
 Kafka:
   kafka_brokers: ["localhost:9092"]
   kafka_topic: orders
+
+Cache:
+  cache_ttl: 60m
+  cache_check_interval: 30s
