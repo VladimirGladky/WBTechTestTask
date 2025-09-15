@@ -58,25 +58,6 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  subscription_service:
-    container_name: order_container
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "4141:4141"
-    depends_on:
-      postgres:
-        condition: service_healthy
-    environment:
-      POSTGRES_HOST: ${POSTGRES_HOST}
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    networks:
-      - mynetwork
-
 volumes:
   postgres_data:
 

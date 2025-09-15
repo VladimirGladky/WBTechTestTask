@@ -40,7 +40,7 @@ func New(cfg *config.Config, ctx context.Context) *App {
 	}
 	server := transport.New(cfg, ctx, srv)
 	consumer := kafka.NewConsumer(cfg.Kafka.KafkaBrokers, cfg.Kafka.KafkaTopic, srv, ctx)
-	go srv.StartEviction(cfg.CacheTTL)
+	go srv.StartEviction(cfg.Cache.CheckInterval)
 	return &App{
 		SubscriptionServer: server,
 		cfg:                cfg,
